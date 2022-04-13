@@ -7,11 +7,11 @@ import javax.swing.JOptionPane;
 public class Main {
     public static void main(String[] args) {
         State q0 = new State("q0", false, true);
-        State q1 = new State("q1", false, false);
-        State q2 = new State("q2", false, false);
+        State q1 = new State("q1");
+        State q2 = new State("q2");
         State q3 = new State("q3", true, false);
-        State q4 = new State("q4", false, false);
-        State q5 = new State("q5", false, false);
+        State q4 = new State("q4");
+        State q5 = new State("q5");
         q0.setLinkedState('1', q4);
         q0.setLinkedState('0', q1);
         q1.setLinkedState('1', q2);

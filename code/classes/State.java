@@ -5,17 +5,23 @@ import java.util.HashMap;
 
 public class State {
     private final Map<Character, State> linkedStates;
-    private final boolean isAcceptanceState, isInitialState;
+    private final boolean acceptanceState, initialState;
     private final String name;
 
     {
         linkedStates = new HashMap<>();
     }
 
-    public State(String name, boolean isAcceptanceState, boolean isInitialState) {
+    public State(String name) {
         this.name = name;
-        this.isAcceptanceState = isAcceptanceState;
-        this.isInitialState = isInitialState;
+        this.acceptanceState = false;
+        this.initialState = false;
+    }
+
+    public State(String name, boolean acceptanceState, boolean initialState) {
+        this.name = name;
+        this.acceptanceState = acceptanceState;
+        this.initialState = initialState;
     }
 
     public State getLinkedState(char index) {
@@ -27,11 +33,11 @@ public class State {
     }
 
     public boolean isAcceptanceState() {
-        return isAcceptanceState;
+        return acceptanceState;
     }
 
     public boolean isInitialState() {
-        return isInitialState;
+        return initialState;
     }
 
     @Override
