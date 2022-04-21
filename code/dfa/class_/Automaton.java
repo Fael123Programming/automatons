@@ -1,11 +1,11 @@
-package classes;
+package dfa.class_;
 
 import java.util.Map;
 import java.util.HashMap;
 
-import exceptions.InitialStateNotFoundException;
-import exceptions.StateNotFoundException;
-import exceptions.UnrecognizedSymbolException;
+import dfa.exceptions.IndefiniteMappingException;
+import dfa.exceptions.InitialStateNotFoundException;
+import dfa.exceptions.UnrecognizedSymbolException;
 
 public class Automaton {
     private final Map<String, State> states;
@@ -43,8 +43,7 @@ public class Automaton {
         for (int i = 0; i < chain.length(); i++) {
             currentChar = chain.charAt(i);
             checkValidSymbol(currentChar);
-            currentState = currentState.getLinkedState(currentChar);
-            //currentChar does not belong to the alphabet.
+            currentState = this.states.get(currentState.getLinkedStateName(currentChar));
         }
         return currentState;
     }
@@ -68,8 +67,8 @@ public class Automaton {
         return !this.alphabet.contains(Character.toString(symbol));
     }
 
-    public class State {
-        private final Map<Character, State> linkedStates;
+    public static class State {
+        private final Map<Character, String> linkedStates;
         private final boolean acceptanceState, initialState;
         private final String name;
 
@@ -89,16 +88,16 @@ public class Automaton {
             this.initialState = initialState;
         }
 
-        public State getLinkedState(char index) {
-            return linkedStates.get(index);
+        public String getLinkedStateName(char symbol) throws IndefiniteMappingException {
+            String stateName = linkedStates.get(symbol);
+            if (stateName == null) {
+                throw new IndefiniteMappingException(symbol, this.name);
+            }
+            return stateName;
         }
 
-        public State linkTo(char index, String otherState) {
-            State toLinkTo = Automaton.this.states.get(otherState);
-            if (toLinkTo == null) {
-                throw new StateNotFoundException(otherState);
-            }
-            this.linkedStates.put(index, toLinkTo);
+        public State linkTo(String nameOtherState, char symbol) {
+            this.linkedStates.put(symbol, nameOtherState);
             return this;
         }
 
