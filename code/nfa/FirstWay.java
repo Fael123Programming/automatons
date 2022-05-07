@@ -1,6 +1,7 @@
 package nfa;
 
 import javax.swing.JOptionPane;
+import java.util.Arrays;
 
 public class FirstWay {
     static int[] acceptanceStates = {2};
@@ -39,6 +40,7 @@ public class FirstWay {
             for (int k = 0; k < newStatesStr.length(); k++) {
                 currentStates[k] = Integer.parseInt(newStatesStr.substring(k, k + 1));
             }
+            System.out.println(currentSymb + " -> " + Arrays.toString(currentStates));
             newStatesStr = new StringBuilder();
         }
         for (int currentState : currentStates) {
